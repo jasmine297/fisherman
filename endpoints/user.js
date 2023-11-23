@@ -1,17 +1,20 @@
 module.exports = function(app){
-    app.get('/user', function(req, res){
-        res.send("user");
+    app.get('/users', function(req, res){
+        res.send("users");
+    });
+    app.get('/users/:user_id/', function(req, res){
+        res.send("users");
     });
 
-    app.post('/user/:user_id/new', function(req, res){
-        res.send("user");
+    app.post('/users', function(req, res){
+        res.send("users");
     });
 
-    app.put('/user/:user_id/', function(req, res){
-        res.send("user");
+    app.put('/users/:user_id/', function(req, res){
+        res.send("users");
     });
 
-    app.delete('/user/:user_id/', function(req, res){
-        res.send("user");
+    app.delete('/users/:user_id/', function(req, res){
+        res.send("users");
     });
 }
