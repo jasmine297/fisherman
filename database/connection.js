@@ -1,27 +1,21 @@
 require('dotenv').config()
+const mongoose = require('mongoose');
+const { Testmodel } = require("./models/testmodel")
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.DATABASE_CONNECTION;
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Successfully connected to Mongo database!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
+async function connect() {
+  mongoose.connect(process.env.DATABASE_CONNECTION, {})
+  mongoose.connection.once('open', () => {
+    console.log('MongoDB connection established');
+    // Create test model
+    const testmodel = new Testmodel({
+      name: "test-model-1"
+    })
+    testmodel.save().then(val => {
+      console.log("Test model created");
+    })
+  }).on('error', (err) => {
+    console.log('MongoDB connection error : ', err);
+  })
 }
 
-module.exports = { run };
+module.exports = { connect };
