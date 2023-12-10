@@ -1,0 +1,25 @@
+{
+    "id": 1,
+    "title": "Sortie entre passionés",
+    "informations": "...",
+    "trip_type": "daily",
+    "price": 40,
+    "trip_dates": [
+        {
+            "startDate": "2011-10-10",
+            "endDate": "2011-10-10",
+            "startTime": "08:30:00",
+            "endTime": "18:00:00"
+        },
+        {
+            "startDate": "2011-11-10",
+            "endDate": "2011-11-10",
+            "startTime": "08:30:00",
+            "endTime": "18:00:00"
+        }
+    ],
+    "passanger_number": 5,
+    "trip_price": 32,
+    "user_id": "1",
+    "boat_id": "1"
+}

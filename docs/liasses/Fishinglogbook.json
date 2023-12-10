@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "fish_name": "Salmon",
+    "photo_url": "https://look-its-a-salmon/salmon.png",
+    "comment": "My first fish !!",
+    "size": 16,
+    "weight": 10,
+    "fishing_place": "Nice",
+    "fishing_date": "2011-11-10",
+    "fish_released": true,
+    "user_id": "1"
+}

@@ -1,0 +1,1581 @@
+openapi: 3.1.0
+info:
+  title: FISHER FANS
+  summary: |
+   Le blablacar des pêcheurs passionés !
+  description:
+   L'application utilisera les ressources boat, user, reservation, fishing log et fishing trip de l API
+  termsOfService: https://www.fisher-fans.org/api-terms-of-use
+  contact:
+    name: FISHER FANS
+    url: https://www.fisherfans.org/about/staying-in-touch
+    email: contact@fisherfans.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: '4'
+servers:
+- url: https://api.fisherfans.org
+  description: Production server
+- url: https://api.preprod.fisherfans.org
+  description: Preproduction server
+- url: https://api.dev.fisherfans.org
+  description: Development server
+tags:
+  - name: Authentification
+    description: Gather all end points related to Authentification operations
+  - name: User
+    description: Gather all end points related to user operations
+  - name: Boat
+    description: Gather all end points related to boat operations
+  - name: Reservation
+    description: Gather all end points related to reservation operations
+  - name: FishingLogBook
+    description: Gather all end points related to fishing log book operations
+  - name: Trip
+    description: Gather all end points related to fishing trip operations
+paths:
+  /3/auth/token/new:
+    get:
+      summary: Create Request Token
+      description: ''
+      operationId: authentification-create-request-token
+      tags:
+        - Authentification
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+                  expires_at:
+                    type: string
+                    examples:
+                      - 2016-08-26 17:04:39 UTC
+                  request_token:
+                    type: string
+                    examples:
+                      - 0123456789abcdef0123456789abcdef01234567
+      deprecated: false
+  /3/auth/session/new:
+    post:
+      summary: Create Session
+      description: ''
+      operationId: authentification-create-session
+      tags:
+        - Authentification      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              Request Example:
+                value:
+                  request_token: 0123456789abcdef0123456789abcdef01234567
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+                  session_id:
+                    type: string
+                    examples:
+                      - 0123456789abcdef0123456789abcdef01234567
+      deprecated: false
+  /3/auth/session:
+    delete:
+      summary: Delete Session
+      description: ''
+      operationId: authentification-delete-session
+      tags:
+        - Authentification      
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+  /user:
+    post:
+      summary: New user
+      description: Create a new user
+      operationId: create-user
+      tags:
+        - User      
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              userBody:
+                $ref: '#/components/examples/userBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+  /user/{user_id}:
+    put:
+      summary: Update user info
+      description: update user info
+      operationId: user-update
+      tags:
+        - User      
+      parameters:
+        - name: user_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              userBody:
+                $ref: '#/components/examples/userBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+    delete:
+      summary: Delete user
+      description: ''
+      operationId: user-delete
+      tags:
+        - User  
+      parameters:
+        - name: user_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8    
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+    get:
+      summary: User's Info
+      description: Get info of a user.
+      operationId: user-info
+      tags: 
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                userBody:
+                  $ref: '#/components/examples/userBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  
+  /user/filter:
+    get:
+      summary: Users info
+      description: Get info of a filtered user list.
+      operationId: filtered-user-info
+      tags: 
+        - User
+      parameters:
+        - name: filters
+          in: query
+          schema:
+            type: array
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                userBody:
+                  $ref: '#/components/examples/userBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /boat:
+    post:
+      summary: New boat
+      description: Create a new boat
+      operationId: create-boat
+      tags:
+        - Boat      
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              boatBody:
+                $ref: '#/components/examples/boatBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+  /boat/{boat_id}:
+    delete:
+      summary: Delete boat
+      description: ''
+      operationId: boat-delete
+      tags:
+        - Boat      
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+    put:
+      summary: Update boat info
+      description: update boat info
+      operationId: boat-update
+      tags:
+        - Boat      
+      parameters:
+        - name: boat_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              boatBody:
+                $ref: '#/components/examples/boatBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+    get:
+      summary: boat's Info
+      description: Get info of a boat.
+      operationId: boat-info
+      tags: 
+        - Boat
+      parameters:
+        - name: boat_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                boatBody:
+                  $ref: '#/components/examples/boatBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /boat/filter:
+    get:
+      summary: Boats info
+      description: Get info of a filtered boat list.
+      operationId: filtered-boat-info
+      tags: 
+        - Boat
+      parameters:
+        - name: filters
+          in: query
+          schema:
+            type: array
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                boatBody:
+                  $ref: '#/components/examples/boatBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /boat/location:
+    get:
+      summary: Boats info
+      description: Get info of a boat list in precise location.
+      operationId: boat-info-location
+      tags: 
+        - Boat
+      parameters:
+        - name: longitude
+          in: query
+          schema:
+            type: string
+            format: string
+          required: true
+        - name: latitude
+          in: query
+          schema:
+            type: string
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                boatBody:
+                  $ref: '#/components/examples/boatBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  
+  /reservation:
+    post:
+      summary: New reservation
+      description: Create a new reservation
+      operationId: create-reservation
+      tags:
+        - Reservation      
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              reservationBody:
+                $ref: '#/components/examples/reservationBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+  /reservation/{reservation_id}:
+    put:
+      summary: Update reservation info
+      description: update reservation info
+      operationId: reservation-update
+      tags:
+        - Reservation      
+      parameters:
+        - name: reservation_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              reservationBody:
+                $ref: '#/components/examples/reservationBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+    delete:
+      summary: Delete reservation
+      description: ''
+      operationId: reservation-delete
+      tags:
+        - Reservation  
+      parameters:
+        - name: reservation_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8    
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+    get:
+      summary: reservation's Info
+      description: Get info of a reservation.
+      operationId: reservation-info
+      tags: 
+        - Reservation
+      parameters:
+        - name: reservation_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                reservationBody:
+                  $ref: '#/components/examples/reservationBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /reservation/filter:
+    get:
+      summary: Reservations info
+      description: Get info of a filtered reservations list.
+      operationId: filtered-reservation-info
+      tags: 
+        - Reservation
+      parameters:
+        - name: filters
+          in: query
+          schema:
+            type: array
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                reservationBody:
+                  $ref: '#/components/examples/reservationBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /trip:
+    post:
+      summary: New trip
+      description: Create a new trip
+      operationId: create-trip
+      tags:
+        - Trip      
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              tripBody:
+                $ref: '#/components/examples/tripBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+  /trip/{trip_id}:
+    put:
+      summary: Update trip info
+      description: update trip info
+      operationId: trip-update
+      tags:
+        - Trip      
+      parameters:
+        - name: trip_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              tripBody:
+                $ref: '#/components/examples/tripBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+    delete:
+      summary: Delete trip
+      description: ''
+      operationId: trip-delete
+      tags:
+        - Trip  
+      parameters:
+        - name: trip_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8    
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+    get:
+      summary: trip's Info
+      description: Get info of a trip.
+      operationId: trip-info
+      tags: 
+        - Trip
+      parameters:
+        - name: trip_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                tripBody:
+                  $ref: '#/components/examples/tripBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /trip/filter:
+    get:
+      summary: Trips info
+      description: Get info of a filtered trips list.
+      operationId: filtered-trip-info
+      tags: 
+        - Trip
+      parameters:
+        - name: filters
+          in: query
+          schema:
+            type: array
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                tripBody:
+                  $ref: '#/components/examples/tripBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /fishinglogbook:
+    post:
+      summary: New fishing log book
+      description: Create a new fishing log book
+      operationId: create-fishing-log-book
+      tags:
+        - FishingLogBook      
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              fishinglogbookBody:
+                $ref: '#/components/examples/fishinglogbookBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+  /fishinglogbook/{fishinglogbook_id}:
+    put:
+      summary: Update fishing log book info
+      description: update fishing log book info
+      operationId: fishing-log-book-update
+      tags:
+        - FishingLogBook      
+      parameters:
+        - name: fishinglogbook_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              fishinglogbookBody:
+                $ref: '#/components/examples/fishinglogbookBody'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 1
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Success.
+      deprecated: false
+    delete:
+      summary: Delete fishing log book
+      description: ''
+      operationId: fishing-log-book-delete
+      tags:
+        - FishingLogBook  
+      parameters:
+        - name: fishinglogbook_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json;charset=utf-8    
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    examples:
+                      - true
+                    default: true
+      deprecated: false
+    get:
+      summary: fishing log book's Info
+      description: Get info of a fishing log book.
+      operationId: fishing-log-book-info
+      tags: 
+        - FishingLogBook
+      parameters:
+        - name: fishinglogbook_id
+          in: path
+          schema:
+            type: integer
+            format: int32
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                fishinglogbookBody:
+                  $ref: '#/components/examples/fishinglogbookBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+  /fishinglogbook/filter:
+    get:
+      summary: Fishing log books info
+      description: Get info of a filtered fishing log books list.
+      operationId: filtered-fishing-log-book-info
+      tags: 
+        - FishingLogBook
+      parameters:
+        - name: filters
+          in: query
+          schema:
+            type: array
+            format: string
+          required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                fishinglogbookBody:
+                  $ref: '#/components/examples/fishinglogbookBody'
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  firstname:
+                    type: string
+                  date_of_birth:
+                    type: integer
+                  email:
+                    type: string
+                  phone:
+                    type: integer
+                  address:
+                    type: string
+                  cp:
+                    type: string
+                  city:
+                    type: string
+                  language:
+                    type: string
+                  picture:
+                    type: string
+                  boat_licence:
+                    type: integer
+                  insurance:
+                    type: string
+                  status:
+                    type: object
+                  compagny:
+                    type: string
+                    default: null
+                  activity:
+                    type: object
+                  siret:
+                    type: string
+                  rc:
+                    type: string
+      deprecated: false
+
+components:
+  securitySchemes:
+    security-model1:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer
+  examples:
+    userBody:
+      summary: User body exemple
+      value:
+        id: 1
+        name: John
+        surname: Doe
+        birthday: '2011-10-10'
+        phone_number: '0123456789'
+        address: 9 Rue Emile Leonard
+        postal_code: '06300'
+        city: Nice
+        languages:
+        - French
+        - English
+        - Spanish
+        photo_url: https://my-photo.org/me.png
+        boat_licence_number: '73619830'
+        assurance_number: '100000000000'
+        status: professional
+        company_name: Riviera
+        activity: location
+        siret: '276391230874'
+        rc_number: '726929832'
+    boatBody:
+      summary: Boat body exemple
+      value: 
+        id: 1
+        name: My boat
+        description: Big and confortable boat.
+        brand: Mercedes
+        manufacture_year: '2017'
+        photo_url: https://my-boat.org/boat.png
+        required_licence_type: fluvial
+        boat_type: open
+        equipments:
+        - sondeur
+        - GPS
+        - ski
+        caution: 450
+        max_capacity: 5
+        beds: 3
+        city_port: Nice
+        port_localisation:
+        - '1.028302'
+        - '7.937843'
+        engine_type: diesel
+        engine_power: 230
+        user_id: '1'
+    reservationBody:
+      summary: Reservation body exemple
+      value:
+        id: 1
+        trip_id: '1'
+        date: '2011-10-10'
+        reserved_slots_number: 5
+        total_price: 300
+        user_id: '1'
+    tripBody:
+      summary: Trip body exemple
+      value: 
+        id: 1
+        title: Sortie entre passionés
+        informations: "..."
+        trip_type: daily
+        price: 40
+        trip_dates:
+        - startDate: '2011-10-10'
+          endDate: '2011-10-10'
+          startTime: '08:30:00'
+          endTime: '18:00:00'
+        - startDate: '2011-11-10'
+          endDate: '2011-11-10'
+          startTime: '08:30:00'
+          endTime: '18:00:00'
+        passanger_number: 5
+        trip_price: 32
+        user_id: '1'
+        boat_id: '1'
+    fishinglogbookBody:
+      summary: Fishinglog body exemple
+      value:
+        id: 1
+        fish_name: Salmon
+        photo_url: https://look-its-a-salmon/salmon.png
+        comment: My first fish !!
+        size: 16
+        weight: 10
+        fishing_place: Nice
+        fishing_date: '2011-11-10'
+        fish_released: true
+        user_id: '1'
+security:
+  - security-model1: []

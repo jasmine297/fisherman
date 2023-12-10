@@ -1,0 +1,23 @@
+{
+    "id": 1,
+    "name": "My boat",
+    "description": "Big and confortable boat.",
+    "brand": "Mercedes",
+    "manufacture_year": "2017",
+    "photo_url": "https://my-boat.org/boat.png",
+    "required_licence_type": "fluvial",
+    "boat_type": "open",
+    "equipments": [
+        "sondeur", 
+        "GPS", 
+        "ski"
+    ],
+    "caution": 450,
+    "max_capacity": 5,
+    "beds": 3,
+    "city_port": "Nice",
+    "port_localisation": ["1.028302", "7.937843"],
+    "engine_type": "diesel",
+    "engine_power": 230,
+    "user_id": "1"
+}

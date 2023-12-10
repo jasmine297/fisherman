@@ -1,0 +1,23 @@
+{
+    "id": 1,
+    "name": "John",
+    "surname": "Doe",
+    "birthday": "2011-10-10",
+    "phone_number": "0123456789",
+    "address": "9 Rue Emile Leonard",
+    "postal_code": "06300",
+    "city": "Nice",
+    "languages" : [
+        "French",
+        "English",
+        "Spanish"
+    ],
+    "photo_url": "https://my-photo.org/me.png",
+    "boat_licence_number": "73619830",
+    "assurance_number": "100000000000",
+    "status": "professional",
+    "company_name": "Riviera",
+    "activity": "location",
+    "siret": "276391230874",
+    "rc_number": "726929832"
+}

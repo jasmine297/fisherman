@@ -1,0 +1,8 @@
+{
+    "id": 1,
+    "trip_id": "1",
+    "date": "2011-10-10",
+    "reserved_slots_number": 5,
+    "total_price": 300,
+    "user_id": "1"
+}
