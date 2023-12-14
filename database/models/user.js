@@ -4,6 +4,70 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+    surname: {
+        type: String,
+        required: true
+    },
+    birthday: {
+        type: Date,
+        required: true
+    },
+    phone_number: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    postal_code: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    languages: {
+        type: Array,
+        required: true
+    },
+    photo_url: {
+        type: String,
+        required: true
+    },
+    boat_licence_number: {
+        type: String,
+        required: true
+    },
+    assurance_number: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true,
+    },
+    company_name: {
+        type: String,
+        required: true
+    },
+    activity: {
+        type: String,
+        required: true
+    },
+    siret: {
+        type: String,
+        required: true
+    },
+    rc_number: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 })
 
