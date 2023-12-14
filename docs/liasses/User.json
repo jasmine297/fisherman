@@ -1,7 +1,8 @@
 {
-    "id": 1,
-    "name": "John",
-    "surname": "Doe",
+    "firstname": "John",
+    "lastname": "Doe",
+    "password": "3110azer",
+    "email": "test@test.fr",
     "birthday": "2011-10-10",
     "phone_number": "0123456789",
     "address": "9 Rue Emile Leonard",
