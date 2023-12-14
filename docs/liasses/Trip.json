@@ -3,7 +3,7 @@
     "title": "Sortie entre passionés",
     "informations": "...",
     "trip_type": "daily",
-    "price": 40,
+    "type_price": "global",
     "trip_dates": [
         {
             "startDate": "2011-10-10",
