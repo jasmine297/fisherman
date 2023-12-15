@@ -13,12 +13,8 @@ app.use(morgan('tiny'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 
-require("./endpoints/user")(app);
+require("./endpoints/user.routes")(app);
 require("./endpoints/auth.routes")(app);
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
