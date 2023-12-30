@@ -75,4 +75,10 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+userSchema.pre("findOneAndUpdate", (next) => {
+    let query = this;
+    console.log(next.toString());
+    next();
+})
+
 module.exports = mongoose.model('User', userSchema)

@@ -2,10 +2,14 @@ const userModel = require('../database/models/user')
 const asyncHandler = require("express-async-handler");
 
 const getUserById = asyncHandler(async (req, res) => {
-    userModel.findById(req.params.id).then((user) => {
-        if (!user) return res.status(404).json({ message: "User not found"})
-        else return res.status(200).json(user)
-    })
+    try {
+        userModel.findById(req.params.id).then((user) => {
+            if (!user) return res.status(404).json({ message: "User not found"})
+            else return res.status(200).json(user)
+        })
+    } catch (error) {
+        return res.status(500).json({ message: error})
+    }
 })
 
 const getUserListByFilters = asyncHandler(async (req, res) => {
@@ -20,19 +24,27 @@ const getUserListByFilters = asyncHandler(async (req, res) => {
 })
 
 const updateUserById = asyncHandler(async (req, res) => {
-    userModel.findByIdAndUpdate(req.params.id, req.body).then((user) => {
-        if (!user) return res.status(404).json({ message: "User not found"})
-        else return res.status(200).json(req.body) 
-    })
+    try {
+        userModel.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).then((user) => {
+            if (!user) return res.status(404).json({ message: "User not found"})
+            else return res.status(200).json(req.body) 
+        })
+    } catch (error) {
+        return res.status(500).json({ message: error})
+    }
 })
 
 const deleteUserById = asyncHandler(async (req, res) => {
-    userModel.findByIdAndDelete(req.params.id).then((user) => {
-        if (!user) return res.status(404).json({ message: "User not found"})
-        else return res.status(200).json({
-            message: "User deleted"
+    try {
+        userModel.findByIdAndDelete(req.params.id).then((user) => {
+            if (!user) return res.status(404).json({ message: "User not found"})
+            else return res.status(200).json({
+                message: "User deleted"
+            })
         })
-    })
+    } catch (error) {
+        return res.status(500).json({ message: error})
+    }
 })
 
 module.exports = {
