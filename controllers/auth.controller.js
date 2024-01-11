@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const userModel = require('../database/models/user')
+const userModel = require('../database/models/user.model')
 const asyncHandler = require("express-async-handler");
 
 const register =  asyncHandler(async (req, res) => {
