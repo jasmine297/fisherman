@@ -14,11 +14,11 @@ const fishinglogbookSchema = new mongoose.Schema({
         required: true
     },
     size: {
-        type: Float32Array,
+        type: Number,
         required: true
     },
     weight: {
-        type: Float32Array,
+        type: Number,
         required: true
     },
     fishing_place: {
@@ -29,14 +29,14 @@ const fishinglogbookSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    fishing_released: {
+    fish_released: {
         type: Boolean,
         required: true
     },
-    user_id: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
 })
 
-module.exports = mongoose.model('Reservation', reservationSchema)
+module.exports = mongoose.model('Fishinglogbook', fishinglogbookSchema)

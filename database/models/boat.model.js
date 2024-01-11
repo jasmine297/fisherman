@@ -34,15 +34,15 @@ const boatSchema = new mongoose.Schema({
         required: true
     },
     caution: {
-        type: Float32Array,
+        type: Number,
         required: true
     },
     max_capacity: {
-        type: Int8Array,
+        type: Number,
         required: true
     },
     beds: {
-        type: Int8Array,
+        type: Number,
         required: true
     },
     city_port: {
@@ -50,7 +50,7 @@ const boatSchema = new mongoose.Schema({
         required: true
     },
     port_localisation: {
-        type: Array,
+        type: [Number],
         required: true
     },
     engine_type: {
