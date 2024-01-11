@@ -22,16 +22,20 @@ const tripSchema = new mongoose.Schema({
         required: true
     },
     passenger_number: {
-        type: Int8Array,
+        type: Number,
         required: true
     },
     trip_price: {
-        type: Float32Array,
+        type: Number,
         required: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    boat: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Boat'
     }
 })
 

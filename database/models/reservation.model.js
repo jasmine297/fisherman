@@ -10,11 +10,11 @@ const reservationSchema = new mongoose.Schema({
         required: true
     },
     reserved_slots_number: {
-        type: Int8Array,
+        type: Number,
         required: true
     },
     total_price: {
-        type: Float32Array,
+        type: Number,
         required: true
     },
     user: {
