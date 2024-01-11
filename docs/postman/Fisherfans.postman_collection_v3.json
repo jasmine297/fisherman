@@ -1,0 +1,1070 @@
+{
+	"info": {
+		"_postman_id": "88912151-b2d6-4859-8ad0-c439bf86508f",
+		"name": "Fisherfans",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14029182",
+		"_collection_link": "https://interstellar-water-107960.postman.co/workspace/Ynov~599af968-6b00-44a0-9c05-0727dcce2982/collection/14029182-88912151-b2d6-4859-8ad0-c439bf86508f?action=share&source=collection_link&creator=14029182"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\": \"John 22\",\n    \"lastname\": \"Doe\",\n    \"password\": \"3110azer\",\n    \"email\": \"test@test.fr\",\n    \"birthday\": \"2011-10-10\",\n    \"phone_number\": \"0123456789\",\n    \"address\": \"9 Rue Emile Leonard\",\n    \"postal_code\": \"06300\",\n    \"city\": \"Nice\",\n    \"languages\" : [\n        \"French\",\n        \"English\",\n        \"Spanish\"\n    ],\n    \"photo_url\": \"https://my-photo.org/me.png\",\n    \"boat_licence_number\": \"73619830\",\n    \"assurance_number\": \"100000000000\",\n    \"status\": \"professional\",\n    \"company_name\": \"Riviera\",\n    \"activity\": \"location\",\n    \"siret\": \"276391230874\",\n    \"rc_number\": \"726929832\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/auth/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = JSON.parse(responseBody);",
+									"pm.environment.set(\"token\", response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.fr\",\n    \"password\": \"3110azer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Get user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/user/6596cb2e946a9506de549e32",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"6596cb2e946a9506de549e32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postal_code\": \"06300\",\n    \"firstname\": \"John 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/users/filters",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstname\": \"teeaaa\",\n    \"lastname\": \"Doezzz\",\n    \"password\": \"3110azer\",\n    \"email\": \"test@test.fr\",\n    \"birthday\": \"2011-10-10\",\n    \"phone_number\": \"0123456789\",\n    \"address\": \"9 Rue Emile Leonard\",\n    \"postal_code\": \"06300\",\n    \"city\": \"Nice\",\n    \"languages\" : [\n        \"French\",\n        \"English\",\n        \"Spanish\"\n    ],\n    \"photo_url\": \"https://my-photo.org/me.png\",\n    \"boat_licence_number\": \"73619830\",\n    \"assurance_number\": \"100000000000\",\n    \"status\": \"professional\",\n    \"company_name\": \"Riviera\",\n    \"activity\": \"location\",\n    \"siret\": \"276391230874\",\n    \"rc_number\": \"726929832\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/user/659688c97604864cf8af3f66",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"659688c97604864cf8af3f66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/user/65967f3aaa42925eff8c4e18",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"65967f3aaa42925eff8c4e18"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "boat",
+			"item": [
+				{
+					"name": "Create new boat",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My boat\",\n    \"description\": \"Big and confortable boat.\",\n    \"brand\": \"Mercedes\",\n    \"manufacture_year\": \"2017\",\n    \"photo_url\": \"https://my-boat.org/boat.png\",\n    \"required_licence_type\": \"fluvial\",\n    \"boat_type\": \"open\",\n    \"equipments\": [\n        \"sondeur\", \n        \"GPS\", \n        \"ski\"\n    ],\n    \"caution\": 450,\n    \"max_capacity\": 5,\n    \"beds\": 3,\n    \"city_port\": \"Nice\",\n    \"port_localisation\": [1.028302, 2.937843],\n    \"engine_type\": \"diesel\",\n    \"engine_power\": 230,\n    \"user\": \"6596cb2e946a9506de549e32\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:3000/boat",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"boat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get boat by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/boat/6596960e837e629a6d27a069",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"boat",
+								"6596960e837e629a6d27a069"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get boats by bounding box",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"min_longitude\": 0.0,\n    \"min_latitude\": 0.0,\n    \"max_longitude\": 40.0284,\n    \"max_latitude\": 40.012 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/boats/boundingbox",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"boats",
+								"boundingbox"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update boat by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My boat\",\n    \"description\": \"Big and confortable boat.\",\n    \"brand\": \"BMW\",\n    \"manufacture_year\": \"2017\",\n    \"photo_url\": \"https://my-boat.org/boat.png\",\n    \"required_licence_type\": \"fluvial\",\n    \"boat_type\": \"open\",\n    \"equipments\": [\n        \"sondeur\", \n        \"GPS\", \n        \"ski\"\n    ],\n    \"caution\": 450,\n    \"max_capacity\": 5,\n    \"beds\": 3,\n    \"city_port\": \"Nice\",\n    \"port_localisation\": [1.028302, 2.937843],\n    \"engine_type\": \"diesel\",\n    \"engine_power\": 230,\n    \"user\": \"659688c97604864cf8af3f66\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/boat/6596960e837e629a6d27a069",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"boat",
+								"6596960e837e629a6d27a069"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete boat by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/boat/6596960e837e629a6d27a069",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"boat",
+								"6596960e837e629a6d27a069"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "trip",
+			"item": [
+				{
+					"name": "Create new trip",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Sortie entre passionés\",\n    \"informations\": \"...\",\n    \"trip_type\": \"daily\",\n    \"type_price\": \"global\",\n    \"trip_dates\": [\n        {\n            \"startDate\": \"2011-10-10\",\n            \"endDate\": \"2011-10-10\",\n            \"startTime\": \"08:30:00\",\n            \"endTime\": \"18:00:00\"\n        },\n        {\n            \"startDate\": \"2011-11-10\",\n            \"endDate\": \"2011-11-10\",\n            \"startTime\": \"08:30:00\",\n            \"endTime\": \"18:00:00\"\n        }\n    ],\n    \"passenger_number\": 5,\n    \"trip_price\": 32,\n    \"user\": \"6596cb2e946a9506de549e32\",\n    \"boat\": \"659fe75cebc68768140ed3ab\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:3000/trip",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get trip by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/trip/659699ba4ea01e8a1b7764e9",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trip",
+								"659699ba4ea01e8a1b7764e9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get trips by filters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trip_type\": \"daily\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/trips/filter",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trips",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update trip by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Sortie entre passionés\",\n    \"informations\": \".lknljln..\",\n    \"trip_type\": \"test\",\n    \"type_price\": \"global\",\n    \"trip_dates\": [\n        {\n            \"startDate\": \"2011-10-10\",\n            \"endDate\": \"2011-10-10\",\n            \"startTime\": \"08:30:00\",\n            \"endTime\": \"18:00:00\"\n        },\n        {\n            \"startDate\": \"2011-11-10\",\n            \"endDate\": \"2011-11-10\",\n            \"startTime\": \"08:30:00\",\n            \"endTime\": \"18:00:00\"\n        }\n    ],\n    \"passenger_number\": 5,\n    \"trip_price\": 32,\n    \"user\": \"659688c97604864cf8af3f66\",\n    \"boat\": \"6596960e837e629a6d27a069\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/trip/659699ba4ea01e8a1b7764e9",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trip",
+								"659699ba4ea01e8a1b7764e9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete trip by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/trip/659699ba4ea01e8a1b7764e9",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"trip",
+								"659699ba4ea01e8a1b7764e9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reservation",
+			"item": [
+				{
+					"name": "Create new reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trip\": \"6596b8644d98b53b14e52ac6\",\n    \"date\": \"2011-10-10\",\n    \"reserved_slots_number\": 5,\n    \"total_price\": 300,\n    \"user\": \"6596cb2e946a9506de549e32\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:3000/reservation",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get reservation by id",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/reservation/6596b9fcfa5b361ed8f16ad2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservation",
+								"6596b9fcfa5b361ed8f16ad2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get reservations by filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total_price\": 300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/reservations/filter",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservations",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update reservation by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total_price\": \"10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/reservation/6596b9fcfa5b361ed8f16ad2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservation",
+								"6596b9fcfa5b361ed8f16ad2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete reservation by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/reservation/6596b9fcfa5b361ed8f16ad2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservation",
+								"6596b9fcfa5b361ed8f16ad2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fishinglogbook",
+			"item": [
+				{
+					"name": "Create new fishing log book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fish_name\": \"Salmon\",\n    \"photo_url\": \"https://look-its-a-salmon/salmon.png\",\n    \"comment\": \"My first fish !!\",\n    \"size\": 16,\n    \"weight\": 10,\n    \"fishing_place\": \"Nice\",\n    \"fishing_date\": \"2011-11-10\",\n    \"fish_released\": true,\n    \"user\": \"6596cb2e946a9506de549e32\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:3000/fishinglogbook",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"fishinglogbook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get fishing log book by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/fishinglogbook/6596cb9a3a1c3e9bef1ab05b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"fishinglogbook",
+								"6596cb9a3a1c3e9bef1ab05b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update fishing log book by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fish_name\": \"Salmone\",\n    \"photo_url\": \"https://look-its-a-salmon/salmon.png\",\n    \"comment\": \"My first fish !!\",\n    \"size\": 16,\n    \"weight\": 10,\n    \"fishing_place\": \"Nice\",\n    \"fishing_date\": \"2011-11-10\",\n    \"fish_released\": true,\n    \"user_id\": \"659688c97604864cf8af3f66\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/fishinglogbook/6596cb9a3a1c3e9bef1ab05b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"fishinglogbook",
+								"6596cb9a3a1c3e9bef1ab05b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update fishing log book from user id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"659688c97604864cf8af3f66\",\n    \"fishinglogbook_id\": \"6596d014f3994e66df74fcb1\",\n    \"data\": {\n        \"fish_name\": \"Poulpe\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:3000/userfishinglogbook",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"userfishinglogbook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete fishing log book by id",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:3000/fishinglogbook/657b1d80e78f2f5e2fd82424",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"fishinglogbook",
+								"657b1d80e78f2f5e2fd82424"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
