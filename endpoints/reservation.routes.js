@@ -1,12 +1,10 @@
-const { getReservationById, updateReservationById, deleteReservationById, createReservationById,getReservationListByFilters } = require("../controllers/reservation.controller");
+const { getReservationById, updateReservationById, deleteReservationById, createReservation ,getReservationListByFilters } = require("../controllers/reservation.controller");
+const verifyToken = require("../middlewares/auth.middleware")
 
 module.exports = function(app){
-    app.get('/reservations/:reservation_id/', getReservationById);
-    app.get('/reservations/filter', getReservationListByFilters)
-
-    app.post('/reservations', createReservationById);
-
-    app.put('/reservations/:reservation_id/', updateReservationById);
-
-    app.delete('/reservations/:reservation_id/', deleteReservationById);
+    app.get('/reservation/:id', verifyToken, getReservationById);
+    app.get('/reservations/filter', verifyToken, getReservationListByFilters)
+    app.post('/reservation', verifyToken, createReservation);
+    app.put('/reservation/:id', verifyToken, updateReservationById);
+    app.delete('/reservation/:id', verifyToken, deleteReservationById);
 }
