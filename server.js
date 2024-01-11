@@ -15,6 +15,10 @@ app.use(express.json())
 
 require("./endpoints/user.routes")(app);
 require("./endpoints/auth.routes")(app);
+require("./endpoints/boat.routes")(app);
+require("./endpoints/trip.routes")(app);
+require("./endpoints/reservation.routes")(app);
+require("./endpoints/fishinglogbook.routes")(app);
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
